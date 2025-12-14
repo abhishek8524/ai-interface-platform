@@ -1,0 +1,4 @@
+/* Optional: keeps footer lower if page is short */
+main {
+  min-height: calc(100vh - 140px);
+}

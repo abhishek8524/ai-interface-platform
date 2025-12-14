@@ -1,19 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 
-type PredictionLabel = 'FAKE' | 'REAL';
-
-interface PredictionResult {
-  label: PredictionLabel;
-  confidence: number; // 0..1
-  note: string;
-}
+import { PredictionService } from '../../core/services/prediction.service';
+import { PredictResponse, PredictionLabel } from '../../core/models/prediction.model';
 
 @Component({
   selector: 'app-detect',
@@ -23,31 +14,29 @@ interface PredictionResult {
   styleUrls: ['./detect.component.css'],
 })
 export class DetectComponent {
-  // --- UI state ---
+  private predictionService = inject(PredictionService);
+
   loading = false;
   errorMsg = '';
-  result: PredictionResult | null = null;
+  result: PredictResponse | null = null;
 
-  // --- Demo samples (replace/extend anytime) ---
-  samples: { title: string; text: string }[] = [
+  samples = [
     {
-      title: 'Sample 1: Breaking claim',
-      text: `BREAKING: A secret study proves a common household item cures every disease overnight.
-Officials are "hiding the truth" and doctors don't want you to know this simple trick.
-Share before it gets removed!`,
+      title: 'True example',
+      text:
+        'The Ministry of Health announced a new vaccination drive starting next month to improve public immunity against seasonal influenza. The program will be carried out across government hospitals and primary health centers.',
     },
     {
-      title: 'Sample 2: Normal news-style',
-      text: `The city council approved a new transit budget on Tuesday after weeks of debate.
-The plan includes additional buses during peak hours and funding for station upgrades.`,
+      title: 'Fake example',
+      text:
+        'Scientists confirm that drinking a special herbal tea can instantly cure all types of cancer within 24 hours, according to a secret government report.',
     },
   ];
 
-  // --- Reactive Form ---
   form = new FormGroup({
     text: new FormControl<string>('', [
       Validators.required,
-      Validators.minLength(40),
+      Validators.minLength(3), // ✅ changed to 3
       Validators.maxLength(5000),
     ]),
   });
@@ -56,11 +45,10 @@ The plan includes additional buses during peak hours and funding for station upg
     return this.form.controls.text;
   }
 
-  // --- Actions ---
   loadSample(i: number) {
-    const sample = this.samples[i];
-    if (!sample) return;
-    this.form.patchValue({ text: sample.text });
+    const s = this.samples[i];
+    if (!s) return;
+    this.form.patchValue({ text: s.text });
     this.result = null;
     this.errorMsg = '';
     this.textCtrl.markAsTouched();
@@ -83,33 +71,61 @@ The plan includes additional buses during peak hours and funding for station upg
       return;
     }
 
-    // Mock loading (Step 3 will call FastAPI instead)
+    const input = (this.textCtrl.value ?? '').trim();
     this.loading = true;
 
-    const input = (this.textCtrl.value ?? '').trim();
+    this.predictionService
+      .predict(input)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (res) => {
+          // ✅ normalize prediction
+          const rawPred = String(res.prediction ?? '').trim().toUpperCase();
 
-    // Tiny “mock” logic just for UI testing
-    const looksFake =
-      /breaking|secret|cures|overnight|share before|get removed|don'?t want you to know/i.test(
-        input
-      );
+          const pred: PredictionLabel =
+            rawPred === 'REAL'
+              ? 'REAL'
+              : rawPred === 'FAKE'
+              ? 'FAKE'
+              : rawPred === 'UNCERTAIN'
+              ? 'UNCERTAIN'
+              : // fallback: handle any unexpected values gracefully
+                (rawPred.includes('REAL') || rawPred.includes('TRUE'))
+              ? 'REAL'
+              : (rawPred.includes('FAKE') || rawPred.includes('FALSE'))
+              ? 'FAKE'
+              : 'UNCERTAIN';
 
-    const label: PredictionLabel = looksFake ? 'FAKE' : 'REAL';
-    const confidence = looksFake ? 0.86 : 0.78;
+          // ✅ sanitize confidence (backend sends 0..100)
+          const c =
+            typeof res.confidence === 'number' && isFinite(res.confidence)
+              ? Math.min(Math.max(res.confidence, 0), 100)
+              : undefined;
 
-    setTimeout(() => {
-      this.loading = false;
-      this.result = {
-        label,
-        confidence,
-        note:
-          'This is a UI demo result. In Step 3, this will come from your FastAPI /predict endpoint.',
-      };
-    }, 700);
+          // ✅ store result exactly in UI shape
+          this.result = {
+            prediction: pred,
+            confidence: c,
+            note: res.note,
+          };
+        },
+        error: (err) => {
+          const msg =
+            err?.error?.detail ||
+            err?.message ||
+            'API request failed (server down / CORS / network).';
+          this.errorMsg = `Could not analyze right now: ${msg}`;
+        },
+      });
   }
 
-  // Helpful for a progress bar %
+  predictionTitle(p: PredictionLabel): string {
+    if (p === 'REAL') return 'Likely Real';
+    if (p === 'FAKE') return 'Likely Fake';
+    return 'Uncertain';
+  }
+
   confidencePercent(): number {
-    return this.result ? Math.round(this.result.confidence * 100) : 0;
+    return this.result?.confidence != null ? Math.round(this.result.confidence) : 0;
   }
 }
