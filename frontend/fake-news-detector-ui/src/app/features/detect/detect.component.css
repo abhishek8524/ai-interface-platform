@@ -1,0 +1,7 @@
+textarea.form-control {
+  resize: vertical;
+}
+
+.result-card {
+  background: #fbfbff;
+}
