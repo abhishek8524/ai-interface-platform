@@ -1,0 +1,78 @@
+<section class="hero p-4 p-md-5">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <div class="kicker mb-2">AI-assisted verification</div>
+
+      <h1 class="hero-title fw-bold mb-3">
+        Check if a news claim looks <span class="text-primary">Real</span> or <span class="text-danger">Fake</span>
+      </h1>
+
+      <p class="subtext mb-4">
+        Paste an article or claim. Our ML model returns a prediction with confidence to help you decide
+        what to trust — fast.
+      </p>
+
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-primary btn-lg" routerLink="/detect">
+          Start Detection
+        </a>
+        <a class="btn btn-outline-secondary btn-lg" routerLink="/about">
+          How it works
+        </a>
+      </div>
+
+      <div class="d-flex gap-3 mt-4 text-muted small flex-wrap">
+        <span>✅ Clean UI</span>
+        <span>✅ Fast results</span>
+        <span>✅ Built with Angular 19</span>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="feature-card p-4">
+        <div class="fw-semibold mb-2">In 3 steps</div>
+        <ol class="mb-3 text-muted small">
+          <li>Open Detect page</li>
+          <li>Paste content / claim</li>
+          <li>Click Analyze</li>
+        </ol>
+
+        <div class="p-3 rounded-3" style="background: rgba(37, 99, 235, 0.08); border: 1px solid var(--border);">
+          <div class="fw-semibold mb-1">Tip</div>
+          <div class="text-muted small">
+            Full paragraphs give better results than only headlines.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row g-3 mt-3">
+  <div class="col-md-4">
+    <div class="feature-card p-4 h-100">
+      <div class="fw-semibold mb-2">Confidence Score</div>
+      <div class="text-muted small">
+        See how sure the model is about the prediction, shown as a percentage.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="feature-card p-4 h-100">
+      <div class="fw-semibold mb-2">Privacy-friendly</div>
+      <div class="text-muted small">
+        We don’t store your text by default. (We can add opt-in feedback later.)
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="feature-card p-4 h-100">
+      <div class="fw-semibold mb-2">Modern Stack</div>
+      <div class="text-muted small">
+        Angular 19 frontend + FastAPI backend + ML model trained on Kaggle dataset.
+      </div>
+    </div>
+  </div>
+</div>

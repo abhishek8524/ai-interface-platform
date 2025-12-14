@@ -8,9 +8,7 @@ __pycache__/
 # Dataset & training artifacts
 news_dataset.csv
 confusion_matrix_pytorch.png
-training_history_pytorch.pnggit status
-
-
+training_history_pytorch.png
 
 # OS / editor
 .DS_Store

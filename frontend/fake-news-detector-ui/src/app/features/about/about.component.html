@@ -1,0 +1,112 @@
+<div class="about-page">
+
+  <!-- Overview -->
+  <section class="card-box">
+    <h2 class="title">About the Project</h2>
+    <p class="text-muted">
+      Fake News Detector is a student-built web application that demonstrates how
+      machine learning models can be integrated into modern web applications.
+      The goal is to help users quickly assess whether a news claim
+      <strong>looks more real or fake</strong> based on textual patterns.
+    </p>
+  </section>
+
+  <!-- How it works -->
+  <section class="card-box">
+    <h3 class="subtitle">How it works</h3>
+    <ol class="steps">
+      <li>User pastes a news article or claim.</li>
+      <li>The text is sent to a backend API for analysis.</li>
+      <li>An ML model evaluates the content and returns a prediction.</li>
+      <li>The frontend displays a label and confidence score.</li>
+    </ol>
+  </section>
+
+  <!-- Model transparency -->
+  <section class="card-box">
+    <h3 class="subtitle">Model & Data Transparency</h3>
+    <ul class="bullets">
+      <li>Model trained on labeled news datasets from Kaggle.</li>
+      <li>Prediction is based on text patterns, not factual verification.</li>
+      <li>Confidence score represents model certainty, not absolute truth.</li>
+      <li>Satire, opinion pieces, or short headlines may affect accuracy.</li>
+    </ul>
+  </section>
+
+  <!-- Team -->
+  <section class="card-box">
+    <h3 class="subtitle">Project Team</h3>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">A</div>
+        <div>
+          <div class="name">Abhishek</div>
+          <div class="role">Frontend Developer</div>
+          <div class="desc">
+            Built the Angular 19 UI, routing, forms, and overall user experience.
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">T</div>
+        <div>
+          <div class="name">Tushar Saxena</div>
+          <div class="role">Machine Learning Engineer</div>
+          <div class="desc">
+            Responsible for dataset selection, preprocessing, and ML model training.
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">A</div>
+        <div>
+          <div class="name">Arun Kumar</div>
+          <div class="role">Backend Developer</div>
+          <div class="desc">
+            Built the FastAPI backend for model inference and API integration.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limitations -->
+  <section class="card-box warning">
+    <h3 class="subtitle">Limitations & Disclaimer</h3>
+    <p>
+      This tool provides an automated prediction and should not be considered a
+      replacement for professional fact-checking or journalism.
+    </p>
+    <ul class="bullets">
+      <li>Results may contain false positives or negatives.</li>
+      <li>Not intended for medical, legal, or financial decision-making.</li>
+      <li>Users should verify information using trusted sources.</li>
+    </ul>
+  </section>
+
+  <!-- FAQ -->
+  <section class="card-box">
+    <h3 class="subtitle">Frequently Asked Questions</h3>
+
+    <div class="faq">
+      <div>
+        <strong>Is this 100% accurate?</strong>
+        <p>No. Machine learning models provide estimates, not guarantees.</p>
+      </div>
+
+      <div>
+        <strong>Do you store my text?</strong>
+        <p>No. Text is only used for analysis and not stored by default.</p>
+      </div>
+
+      <div>
+        <strong>Can this detect satire?</strong>
+        <p>Satirical or humorous content may sometimes be misclassified.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
