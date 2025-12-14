@@ -166,6 +166,11 @@ class NewsInput(BaseModel):
 def home():
     return {"message": "Fake News Detection API is running 🚀"}
 
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.post("/predict")
 def predict_news(news: NewsInput):
     cleaned = clean_text(news.text)
