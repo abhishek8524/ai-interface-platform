@@ -1,6 +1,29 @@
-.navbar-brand {
-  letter-spacing: 0.2px;
+.navbar {
+  backdrop-filter: blur(10px);
 }
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+}
+
+.nav-link {
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+}
+
+.nav-link:hover {
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--text);
+}
+
 .nav-link.active {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--primary-2);
   font-weight: 600;
 }

@@ -1,1 +1,29 @@
-h1 { letter-spacing: -0.2px; }
+.hero {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.92));
+}
+
+.kicker {
+  color: var(--primary-2);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-size: 0.9rem;
+}
+
+.hero-title {
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.subtext {
+  color: var(--muted);
+}
+
+.feature-card {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
