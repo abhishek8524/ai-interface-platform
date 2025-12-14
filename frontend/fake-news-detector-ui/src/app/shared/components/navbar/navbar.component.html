@@ -20,6 +20,17 @@
 
     <div id="nav" class="collapse navbar-collapse">
       <div class="navbar-nav ms-auto gap-2 align-items-lg-center mt-3 mt-lg-0">
+
+        <!-- API Status Badge -->
+        <span
+          *ngIf="apiOnline !== null"
+          class="api-badge"
+          [class.online]="apiOnline"
+          [class.offline]="!apiOnline"
+        >
+          ● {{ apiOnline ? 'API Online' : 'API Offline' }}
+        </span>
+
         <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           Home
         </a>
